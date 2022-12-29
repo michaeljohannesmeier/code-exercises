@@ -7,8 +7,9 @@
 
     <div class="joke-container mt-20 bg-fuchsia-200 rounded p-10 text-center shadow-md">
       <h2 class="text-2xl">The great Chuck</h2>
-      <h3 class="text-1xl mt-10">{{ result.value }}</h3>
-      <button class="bg-rose-400 hover:bg-rose-500 text-white font-bold p-2 rounded-md mt-16" @input="getJokes">Give a thought, great
+      <h3 class="text-1xl mt-10">{{ info }}</h3>
+      <button class="bg-rose-400 hover:bg-rose-500 text-white font-bold p-2 rounded-md mt-16" @input="getJokes">Give a
+        thought, great
         Chuck </button>
     </div>
   </div>
@@ -19,10 +20,10 @@ import axios from 'axios'
 
 // const jokeAPIURL = 'https://api.chucknorris.io/jokes/random'
 
-const getJokes = async () => {
-  const result = await axios('https://api.chucknorris.io/jokes/random')
-  result.value
-}
+// const getJokes = async () => {
+//   const result = await axios('https://api.chucknorris.io/jokes/random')
+//   result.value
+// }
 
 export default {
   name: 'App',
@@ -35,6 +36,12 @@ export default {
       contents: null
     }
   },
+
+  mounted() {
+    axios
+      .get('https://api.chucknorris.io/jokes/random')
+      .then(response => (this.info = response.value))
+  }
 }
 </script>
 
