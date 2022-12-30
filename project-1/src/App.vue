@@ -10,8 +10,7 @@
       <h3 class="text-2xl mt-10 text-black">{{ state.joke }}</h3>
       <button class="bg-rose-400 hover:bg-rose-500 text-white font-bold p-2 rounded-md mt-14"
         @click="getRandomJoke">Give a
-        thought, great
-        Chuck </button>
+        Give me a random Joke</button>
     </div>
   </div>
 </template>
@@ -28,4 +27,15 @@ const getRandomJoke = async () => {
   state.joke = result.data.value
 }
 
+// Not using Async and await
+// --------------------------
+// const getRandomJoke = () => {
+//   /* 
+//     - this is the short versino of getRandomJoke2
+//     - axios makes the request, and then you ll get the res (response), but see getRandomJoke2 to better understand
+//   */
+//   axios.get('https://api.chucknorris.io/jokes/random').then((res) => {
+//     state.joke = res.data.value;
+//   });
+// };
 </script>
