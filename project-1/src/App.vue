@@ -26,8 +26,8 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-import axios from 'axios';
+import { reactive } from 'vue'
+import axios from 'axios'
 
 const state = reactive({
   count: 0,
@@ -36,37 +36,48 @@ const state = reactive({
   searchQuery: '',
   queryTimeout: null,
   jokesSearchResult: null,
-});
-const jokeAPI = 'https://api.chucknorris.io/jokes/random';
+})
+const jokeAPI = 'https://api.chucknorris.io/jokes/random'
 
 const getRandomJoke = async () => {
-  const result = await axios(jokeAPI);
-  state.joke = result.data.value;
-};
+  const result = await axios(jokeAPI)
+  state.joke = result.data.value
+}
 
 // Not using Async and await
 // --------------------------
 // const getRandomJoke = () => {
 //   /*
-//     - this is the short versino of getRandomJoke2
-//     - axios makes the request, and then you ll get the res (response), but see getRandomJoke2 to better understand
+//     - axios makes the request, and then you ll get the res (response)
 //   */
-//   axios.get('https://api.chucknorris.io/jokes/random').then((res) => {
-//     state.joke = res.data.value;
-//   });
-// };
+//   axios.get('https://api.chucknorris.io/jokes/random')
+//     .then(res => {
+//       state.joke = res.data.value
+//     })
+// }
 
 const searchForJokes = async () => {
-  console.log(state.searchQuery);
-  clearTimeout(state.queryTimeout);
+  console.log(state.searchQuery)
+  clearTimeout(state.queryTimeout)
   state.queryTimeout = setTimeout(async () => {
     if (state.searchQuery !== '') {
       const result = await axios(
         `https://api.chucknorris.io/jokes/search?query=${state.searchQuery}`
-      );
-      state.jokesSearchResult = result.data;
-      console.log(state.jokesSearchResult);
+      )
+      state.jokesSearchResult = result.data
+      console.log(state.jokesSearchResult)
     }
-  }, 600);
-};
+  }, 600)
+
+  getLast3Jokes()
+}
+
+const getLast3Jokes = (jokes) => {
+  jokes
+    .map(joke => joke.value)
+    .slice(0, 3)
+    .forEach(joke => {
+      joke.result.value
+    });
+}
 </script>
