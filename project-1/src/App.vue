@@ -13,12 +13,12 @@
     <div class="flex flex-col items-center">
       <input type="text" placeholder="Search for a joke" v-model="state.searchQuery" @keyup="searchForJokes"
         class="px-2 py-1 w-3/4 text-black mt-20 bg-slate-300 border-b focus:border-slate-600 focus:outline-none focus:shadow-md" />
-      <!-- <p v-if="!serverError && jokesSearchResult.lenth === 0">No result match, try again</p> -->
+      <!-- <p v-if="!serverError && jokeData.lenth === 0">No result match, try again</p> -->
       <div class="joke-container mt-5 bg-fuchsia-200 rounded p-10 mx-10 text-center shadow-md">
         <h2 class="text-3xl border-b-2">The great Chuck!</h2>
         <h3 class="text-2xl mt-10 text-black">{{ state.joke }} 
-          <li v-for="joke, index in state.jokesSearchResult" :key="index">
-            {{  index }}: {{ joke }}
+          <li v-for="joke, index in state.jokeData" :key="index">
+            {{ joke.value }}  <br> {{ joke.updated_at }}
           </li>
         </h3>
         <button class="bg-rose-400 hover:bg-rose-500 text-white font-bold p-2 rounded-md mt-14" @click="getRandomJoke">
@@ -41,7 +41,7 @@ const state = reactive({
   randomNumber: null,
   searchQuery: '',
   queryTimeout: null,
-  jokesSearchResult: null,
+  jokeData: null,
 })
 
 const jokeAPI = 'https://api.chucknorris.io/jokes/random'
@@ -72,8 +72,7 @@ const searchForJokes = async () => {
       const result = await axios(
         `https://api.chucknorris.io/jokes/search?query=${state.searchQuery}`
       )
-      state.jokesSearchResult = result.data.result.slice(0, 3).map((joke) => joke.value)
-      // console.log(result.data.result.slice(0, 3).map((joke) => joke.value))
+      state.jokeData = result.data.result.slice(0, 3)
     }
   }, 600)
 }
