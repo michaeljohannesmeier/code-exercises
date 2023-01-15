@@ -16,7 +16,11 @@
       <!-- <p v-if="!serverError && jokesSearchResult.lenth === 0">No result match, try again</p> -->
       <div class="joke-container mt-5 bg-fuchsia-200 rounded p-10 mx-10 text-center shadow-md">
         <h2 class="text-3xl border-b-2">The great Chuck!</h2>
-        <h3 class="text-2xl mt-10 text-black">{{ state.joke }}</h3>
+        <h3 class="text-2xl mt-10 text-black">{{ state.joke }} 
+          <li v-for="joke, index in state.jokesSearchResult" :key="index">
+            {{  index }}: {{ joke }}
+          </li>
+        </h3>
         <button class="bg-rose-400 hover:bg-rose-500 text-white font-bold p-2 rounded-md mt-14" @click="getRandomJoke">
           Give me a random Joke
         </button>
@@ -26,6 +30,8 @@
 </template>
 
 <script setup>
+// ref and reactive are the same?
+
 import { reactive } from 'vue'
 import axios from 'axios'
 
@@ -37,7 +43,9 @@ const state = reactive({
   queryTimeout: null,
   jokesSearchResult: null,
 })
+
 const jokeAPI = 'https://api.chucknorris.io/jokes/random'
+// const categoryJoke = `https://api.chucknorris.io/jokes/search?query=${state.searchQuery}`
 
 const getRandomJoke = async () => {
   const result = await axios(jokeAPI)
@@ -64,20 +72,11 @@ const searchForJokes = async () => {
       const result = await axios(
         `https://api.chucknorris.io/jokes/search?query=${state.searchQuery}`
       )
-      state.jokesSearchResult = result.data
-      console.log(state.jokesSearchResult)
+      state.jokesSearchResult = result.data.result.slice(0, 3).map((joke) => joke.value)
+      // console.log(result.data.result.slice(0, 3).map((joke) => joke.value))
     }
   }, 600)
-
-  getLast3Jokes()
 }
 
-const getLast3Jokes = (jokes) => {
-  jokes
-    .map(joke => joke.value)
-    .slice(0, 3)
-    .forEach(joke => {
-      joke.result.value
-    });
-}
+
 </script>
