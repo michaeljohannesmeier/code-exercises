@@ -44,7 +44,6 @@ const state = reactive({
 })
 
 const jokeAPI = 'https://api.chucknorris.io/jokes/random'
-// const categoryJoke = `https://api.chucknorris.io/jokes/search?query=${state.searchQuery}`
 
 const getRandomJoke = async () => {
   const result = await axios(jokeAPI)
