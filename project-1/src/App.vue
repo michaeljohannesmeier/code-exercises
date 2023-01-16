@@ -16,9 +16,9 @@
       <!-- <p v-if="!serverError && jokeData.lenth === 0">No result match, try again</p> -->
       <div class="joke-container mt-5 bg-fuchsia-200 rounded p-10 mx-10 text-center shadow-md">
         <h2 class="text-3xl border-b-2">The great Chuck!</h2>
-        <h3 class="text-2xl mt-10 text-black">{{ state.joke }} 
-          <li v-for="joke, index in state.jokeData" :key="index">
-            {{ joke.value }}  <br> {{ joke.updated_at }}
+        <h3 class="text-2xl mt-10 text-black">{{ state.joke }}
+          <li v-for="joke, index in state.jokeData" :key="index" class="mb-5">
+            {{ joke.value }}
           </li>
         </h3>
         <button class="bg-rose-400 hover:bg-rose-500 text-white font-bold p-2 rounded-md mt-14" @click="getRandomJoke">
@@ -72,7 +72,9 @@ const searchForJokes = async () => {
       const result = await axios(
         `https://api.chucknorris.io/jokes/search?query=${state.searchQuery}`
       )
-      state.jokeData = result.data.result.slice(0, 3)
+      // Math.random() returns a random number between 0 and 1. So, Math.random() < 0.3 will evaluate to true for approximately 30% of the elements in the array, and to false for the remaining 70%.
+      // It is important to note that, the comparison expression (< 0.3) is used to limit the number of elements that are selected from the array. Without this comparison expression, the filter method will return the original array without any changes.
+      state.jokeData = result.data.result.filter(() => Math.random() < 0.3).slice(0, 3)
     }
   }, 600)
 }
