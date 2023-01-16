@@ -38,7 +38,6 @@ import axios from 'axios'
 const state = reactive({
   count: 0,
   joke: null,
-  randomNumber: null,
   searchQuery: '',
   queryTimeout: null,
   jokeData: null,
