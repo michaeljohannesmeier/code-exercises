@@ -107,5 +107,38 @@ const together = myMovies
 
 console.log(together)
 
-  const together2 = together.map(obj => obj.title)
+const together2 = together.map(obj => obj.title)
 console.log(together2)
+
+
+// Sort() Method
+// ------------------!
+
+let people = [
+  { name: "John", age: 30 },
+  { name: "Mike", age: 25 },
+  { name: "Sara", age: 35 },
+  { name: "Wicho", age: 28 },
+  { name: "Boris", age: 32 },
+  { name: 'Cabrita', age: 39 }
+]
+
+const sortByAge = people.sort((a, b) => a.age - b.age)
+console.log(sortByAge)
+
+const sortByAgeReverse = people.sort((a, b) => b.age - a.age);
+console.log(sortByAgeReverse)
+
+const sortByName = people.sort((a, b) => {
+  let nameA = a.name.toUpperCase()
+  let nameB = b.name.toUpperCase()
+
+  if (nameA < nameB) {
+    return -1
+  }
+  if (nameA > nameB) {
+    return 1
+  }
+  return 0
+})
+console.log(sortByName)
