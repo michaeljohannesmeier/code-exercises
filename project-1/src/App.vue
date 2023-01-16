@@ -69,12 +69,13 @@ const searchForJokes = async () => {
   clearTimeout(state.queryTimeout)
   state.queryTimeout = setTimeout(async () => {
     if (state.searchQuery !== '') {
-      const result = await axios(
+      const res = await axios(
         `https://api.chucknorris.io/jokes/search?query=${state.searchQuery}`
       )
+      const getJokes = res.data.result
       // Math.random() returns a random number between 0 and 1. So, Math.random() < 0.3 will evaluate to true for approximately 30% of the elements in the array, and to false for the remaining 70%.
       // It is important to note that, the comparison expression (< 0.3) is used to limit the number of elements that are selected from the array. Without this comparison expression, the filter method will return the original array without any changes.
-      state.jokeData = result.data.result.filter(() => Math.random() < 0.3).slice(0, 3)
+      state.jokeData = getJokes.filter(() => Math.random() < 0.3).slice(0, 3)
     }
   }, 600)
 }
